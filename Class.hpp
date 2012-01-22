@@ -4,7 +4,6 @@
 
 #include "Module.hpp"
 #include "Identifier.hpp"
-#include "helpers.hpp"
 
 namespace rb
 {
@@ -15,7 +14,8 @@ namespace rb
     public:
         
         Class() {}
-        Class(VALUE v) {self = v; priv::ensure_kind_of(self, rb_cClass);}
+        Class(VALUE v) : Module(v) {}
+        Class(BasicObject o) : Module(o) {}
         
         static Class Define(const char* name, Class super = rb_cObject);
         static Class Define(Module under, const char* name, Class super = rb_cObject);

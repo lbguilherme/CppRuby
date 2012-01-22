@@ -19,8 +19,6 @@ namespace rb
         
         BasicObject() {};
         BasicObject(VALUE v) : self(v) {};
-        template<typename T>
-        BasicObject(const T& obj, const typename std::enable_if<!std::is_base_of<BasicObject, T>::value, bool>::type = false);
         
         template<typename... Args>
         BasicObject call(Identifier method, const Args&... args);

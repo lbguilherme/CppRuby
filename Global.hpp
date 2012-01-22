@@ -13,6 +13,11 @@ namespace rb
     Class cObject      = rb_cObject;
     Class cClass       = rb_cClass;
     
+    Object Nil = Qnil;
+    Object True = Qtrue;
+    Object False = Qfalse;
+    Object Undef = Qundef;
+    
     template<typename... Args>
     static Object call(Identifier method, const Args&... args);
     

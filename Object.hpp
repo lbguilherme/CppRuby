@@ -4,7 +4,6 @@
 
 #include "BasicObject.hpp"
 #include "Identifier.hpp"
-#include "helpers.hpp"
 
 namespace rb
 {
@@ -17,12 +16,12 @@ namespace rb
     public:
         
         Object() {}
-        Object(VALUE v) {self = v; priv::ensure_kind_of(self, rb_cObject);}
-        Object(BasicObject obj) : BasicObject(obj) {}
+        Object(VALUE v) : BasicObject(v) {}
+        Object(BasicObject o) : BasicObject(o) {}
         
         Object ivar_defined(Identifier var);
-        Object ivar_get(Identifier var);
-        Object ivar_set(Identifier var, Object obj);
+        Object ivar(Identifier var);
+        Object ivar(Identifier var, Object obj);
         
         Object compare(Object other);
         Object case_equal(Object other);

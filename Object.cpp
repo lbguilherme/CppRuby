@@ -1,16 +1,7 @@
 
 #include "Object.hpp"
 #include "conversions.hpp"
-#include "helpers.hpp"
-/*
-VALUE rb_obj_methods(int argc, VALUE argv[], VALUE obj);
-VALUE rb_obj_protected_methods(int argc, VALUE argv[], VALUE obj);
-VALUE rb_obj_protected_method(VALUE obj, VALUE vid);	
-VALUE rb_obj_private_methods(int argc, VALUE argv[], VALUE obj);
-VALUE rb_obj_private_method(VALUE obj, VALUE vid);	
-VALUE rb_obj_public_methods(int argc, VALUE argv[], VALUE obj);
-VALUE rb_obj_public_method(VALUE obj, VALUE vid);	
-*/
+
 namespace rb
 {
     
@@ -19,12 +10,12 @@ namespace rb
         return rb_ivar_defined(self, var);
     }
     
-    Object Object::ivar_get(Identifier var)
+    Object Object::ivar(Identifier var)
     {
         return rb_ivar_get(self, var);
     }
     
-    Object Object::ivar_set(Identifier var, Object obj)
+    Object Object::ivar(Identifier var, Object obj)
     {
         return rb_ivar_set(self, var, obj);
     }
@@ -260,7 +251,7 @@ namespace rb
     
     std::ostream& operator<<(std::ostream& stream, Object obj)
     {
-        stream << convert<std::string>(obj.to_s());
+        stream << ruby_cast<char*>(obj.to_s());
         return stream;
     }
     

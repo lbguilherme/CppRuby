@@ -4,7 +4,6 @@
 
 #include "Object.hpp"
 #include "Identifier.hpp"
-#include "helpers.hpp"
 
 namespace rb
 {
@@ -15,7 +14,8 @@ namespace rb
     public:
         
         Module() {}
-        Module(VALUE v) {self = v; priv::ensure_kind_of(self, rb_cModule);}
+        Module(VALUE v) : Object(v) {}
+        Module(BasicObject o) : Object(o) {}
         
         static Module Define(const char* name);
         static Module Define(Module under, const char* name);

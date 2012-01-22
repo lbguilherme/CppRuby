@@ -12,12 +12,14 @@ namespace rb
         template<Object(*Func)(Object)>
         VALUE callback(int argc, VALUE argv[], VALUE self)
         {
+            (void)argc;(void)argv;//TODO
             return Func(Object(self));
         }
         
         template<Object(*Func)(Object, Object)>
         VALUE callback(int argc, VALUE argv[], VALUE self)
         {
+            (void)argc;(void)argv;//TODO
             return Func(Object(self), Object(argv[0]));
         }
         

@@ -1,6 +1,5 @@
 
 #include "Class.hpp"
-#include "helpers.hpp"
 #include "functions.hpp"
 
 namespace rb
