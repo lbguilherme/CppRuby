@@ -1,6 +1,4 @@
-
-#ifndef RUBY_CONVERSIONS_HPP
-#define RUBY_CONVERSIONS_HPP
+#pragma once
 
 #include "Object.hpp"
 
@@ -194,5 +192,3 @@ namespace rb
     }
     
 }
-
-#endif // RUBY_CONVERSIONS_HPP

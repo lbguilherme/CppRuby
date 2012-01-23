@@ -1,6 +1,5 @@
 
 #include "Class.hpp"
-#include "functions.hpp"
 
 namespace rb
 {
@@ -18,23 +17,7 @@ namespace rb
     template<typename... Args>
     Object Class::New(const Args&... args)
     {
-        return rb_class_new_instance(sizeof...(args), (VALUE[]){args...}, self);
-    }
-    
-    template<Object(*Func)(Object)>
-    Class& Class::def(const char* name)
-    {
-        auto f = priv::callback<Func>;
-        rb_define_method(self, name, (VALUE(*)(...))f, -1);
-        return *this;
-    }
-    
-    template<Object(*Func)(Object, Object)>
-    Class& Class::def(const char* name)
-    {
-        auto f = priv::callback<Func>;
-        rb_define_method(self, name, (VALUE(*)(...))f, -1);
-        return *this;
+        return rb_class_new_instance(sizeof...(args), (VALUE[]){args...}, value);
     }
     
 }

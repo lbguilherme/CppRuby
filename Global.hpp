@@ -1,6 +1,4 @@
-
-#ifndef RUBY_GLOBAL_HPP
-#define RUBY_GLOBAL_HPP
+#pragma once
 
 #include "Object.hpp"
 #include "Class.hpp"
@@ -13,8 +11,8 @@ namespace rb
     Class cObject      = rb_cObject;
     Class cClass       = rb_cClass;
     
-    Object Nil = Qnil;
-    Object True = Qtrue;
+    Object Nil   = Qnil;
+    Object True  = Qtrue;
     Object False = Qfalse;
     Object Undef = Qundef;
     
@@ -31,5 +29,3 @@ namespace rb
     static Object puts(const Args&... args);
     
 }
-
-#endif // RUBY_GLOBAL_HPP

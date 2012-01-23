@@ -1,6 +1,4 @@
-
-#ifndef RUBY_IDENTIFIER_HPP
-#define RUBY_IDENTIFIER_HPP
+#pragma once
 
 namespace rb
 {
@@ -11,14 +9,12 @@ namespace rb
         
         ID id;
         
-        Identifier(const char* name);
+        Identifier(const char* name) : id(rb_intern(name)) {}
         
-        Identifier(ID name);
+        Identifier(ID name) : id(name) {}
         
         operator ID() const { return id; }
         
     };
     
 }
-
-#endif // RUBY_IDENTIFIER_HPP

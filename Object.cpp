@@ -1,5 +1,6 @@
 
 #include "Object.hpp"
+#include "Class.hpp"
 #include "conversions.hpp"
 
 namespace rb
@@ -7,17 +8,17 @@ namespace rb
     
     Object Object::ivar_defined(Identifier var)
     {
-        return rb_ivar_defined(self, var);
+        return rb_ivar_defined(value, var);
     }
     
     Object Object::ivar(Identifier var)
     {
-        return rb_ivar_get(self, var);
+        return rb_ivar_get(value, var);
     }
     
     Object Object::ivar(Identifier var, Object obj)
     {
-        return rb_ivar_set(self, var, obj);
+        return rb_ivar_set(value, var, obj);
     }
     
     Object Object::compare(Object other)
@@ -32,7 +33,7 @@ namespace rb
     
     Class Object::class_of()
     {
-        return rb_obj_class(self);
+        return rb_obj_class(value);
     }
     
     Object Object::clone()
@@ -42,7 +43,7 @@ namespace rb
     
     Object Object::display(Object out)
     {
-        return rb_io_write(out, self);
+        return rb_io_write(out, value);
     }
     
     Object Object::dup()
@@ -67,12 +68,12 @@ namespace rb
     
     Object Object::freeze()
     {
-        return rb_obj_freeze(self);
+        return rb_obj_freeze(value);
     }
     
     Object Object::is_frozen()
     {
-        return rb_obj_frozen_p(self);
+        return rb_obj_frozen_p(value);
     }
     
     Object Object::hash()
@@ -87,7 +88,7 @@ namespace rb
     
     Object Object::is_instance_of(Class klass)
     {
-        return rb_obj_is_instance_of(self, klass);
+        return rb_obj_is_instance_of(value, klass);
     }
     
     Object Object::is_instance_variable_defined(Object var)
@@ -107,22 +108,22 @@ namespace rb
     
     Object Object::instance_variables()
     {
-        return rb_obj_instance_variables(self);
+        return rb_obj_instance_variables(value);
     }
     
     Object Object::is_a(Module module)
     {
-        return rb_obj_is_kind_of(self, module);
+        return rb_obj_is_kind_of(value, module);
     }
     
     Object Object::is_kind_of(Module module)
     {
-        return rb_obj_is_kind_of(self, module);
+        return rb_obj_is_kind_of(value, module);
     }
     
     Object Object::method(Object name)
     {
-        return rb_obj_method(self, name);
+        return rb_obj_method(value, name);
     }
     
     Object Object::methods()
@@ -132,12 +133,12 @@ namespace rb
     
     Object Object::is_nil()
     {
-        return self == Qnil;
+        return value == Qnil;
     }
     
     Object Object::object_id()
     {
-        return rb_obj_id(self);
+        return rb_obj_id(value);
     }
     
     Object Object::public_method(Object name)
@@ -178,10 +179,7 @@ namespace rb
     
     Object Object::respond_to(Object method, Object include_private)
     {
-        if (VALUE(include_private) == Qundef)
-            return call("respond_to?", method);
-        else
-            return call("respond_to?", method, include_private);
+        return call("respond_to?", method, include_private);
     }
     
     Object Object::respond_to_missing(Object method, Object include_private)
@@ -197,31 +195,28 @@ namespace rb
     
     Class Object::singleton_class() 
     {
-        return rb_singleton_class(self);
+        return rb_singleton_class(value);
     }
     
     Object Object::singleton_methods(Object all)
     {
-        if (VALUE(all) == Qundef)
-            return rb_obj_singleton_methods(0, NULL, self);
-        else
-            return rb_obj_singleton_methods(1, (VALUE[]){all}, self);
+        return rb_obj_singleton_methods(1, (VALUE[]){all}, value);
     }
     
     Object Object::taint()
     {
-        return rb_obj_taint(self);
+        return rb_obj_taint(value);
     }
     
     Object Object::is_tainted()
     {
-        return rb_obj_tainted(self);
+        return rb_obj_tainted(value);
     }
     
     Object Object::tap(std::function<void(Object)> block)
     {
-        block(self);
-        return self;
+        block(value);
+        return value;
     }
     
     Object Object::to_s()
@@ -231,22 +226,22 @@ namespace rb
     
     Object Object::trust()
     {
-        return rb_obj_trust(self);
+        return rb_obj_trust(value);
     }
     
     Object Object::untaint()
     {
-        return rb_obj_untaint(self);
+        return rb_obj_untaint(value);
     }
     
     Object Object::untrust()
     {
-        return rb_obj_untrust(self);
+        return rb_obj_untrust(value);
     }
     
     Object Object::is_untrusted()
     {
-        return rb_obj_untrusted(self);
+        return rb_obj_untrusted(value);
     }
     
     std::ostream& operator<<(std::ostream& stream, Object obj)

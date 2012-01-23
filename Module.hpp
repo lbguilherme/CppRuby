@@ -1,6 +1,4 @@
-
-#ifndef RUBY_MODULE_HPP
-#define RUBY_MODULE_HPP
+#pragma once
 
 #include "Object.hpp"
 #include "Identifier.hpp"
@@ -23,5 +21,3 @@ namespace rb
     };
     
 }
-
-#endif // RUBY_MODULE_HPP

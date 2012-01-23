@@ -1,7 +1,5 @@
 
 #include "BasicObject.hpp"
-#include "Object.hpp"
-#include "conversions.hpp"
 
 namespace rb
 {
@@ -10,14 +8,14 @@ namespace rb
     BasicObject BasicObject::call(Identifier method, const Args&... args)
     {
         BasicObject oargs[] = {args...};
-        return rb_funcall2(self, method.id, sizeof...(args), (VALUE*)oargs);
+        return rb_funcall2(value, method.id, sizeof...(args), (VALUE*)oargs);
     }
     
     template<typename... Args>
     BasicObject BasicObject::public_call(Identifier method, const Args&... args)
     {
         BasicObject oargs[] = {args...};
-        return rb_funcall3(self, method.id, sizeof...(args), (VALUE*)oargs);
+        return rb_funcall3(value, method.id, sizeof...(args), (VALUE*)oargs);
     }
     
     bool operator==(BasicObject left, BasicObject right)

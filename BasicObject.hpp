@@ -1,34 +1,31 @@
-
-#ifndef RUBY_BASICOBJECT_HPP
-#define RUBY_BASICOBJECT_HPP
+#pragma once
 
 #include "Identifier.hpp"
 
 namespace rb
 {
     
-    class Object;
     class BasicObject;
     class BasicObject
     {
     protected:
         
-        VALUE self;
+        VALUE value;
         
     public:
         
         BasicObject() {};
-        BasicObject(VALUE v) : self(v) {};
+        BasicObject(VALUE v) : value(v) {};
         
         template<typename... Args>
         BasicObject call(Identifier method, const Args&... args);
         template<typename... Args>
         BasicObject public_call(Identifier method, const Args&... args);
         
-        explicit operator bool() const { return RTEST(self); }
-        operator VALUE() const { return self; }
-        operator RBasic*() const { return (RBasic*)self; }
-        operator RString*() const { return (RString*)self; }
+        explicit operator bool() const { return RTEST(value); }
+        operator VALUE() const { return value; }
+        operator RBasic*() const { return (RBasic*)value; }
+        operator RString*() const { return (RString*)value; }
         
     };
     
@@ -36,5 +33,3 @@ namespace rb
     bool operator!=(BasicObject left, BasicObject right);
     
 }
-
-#endif // RUBY_BASICOBJECT_HPP

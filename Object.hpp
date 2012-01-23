@@ -1,16 +1,13 @@
-
-#ifndef RUBY_OBJECT_HPP
-#define RUBY_OBJECT_HPP
+#pragma once
 
 #include "BasicObject.hpp"
-#include "Identifier.hpp"
 
 namespace rb
 {
     
-    class Object;
     class Module;
     class Class;
+    class Object;
     class Object : public BasicObject
     {
     public:
@@ -58,12 +55,12 @@ namespace rb
         Object private_methods();
         Object protected_method(Object name);
         Object protected_methods();
-        Object respond_to(Object method, Object include_private = Qundef);
+        Object respond_to(Object method, Object include_private = Qnil);
         Object respond_to_missing(Object method, Object include_private);
         template<typename... Args>
         Object send(Object method, const Args&... args);
         Class singleton_class();
-        Object singleton_methods(Object all = Qundef);
+        Object singleton_methods(Object all = Qtrue);
         Object taint();
         Object is_tainted();
         Object tap(std::function<void(Object)> block);
@@ -84,8 +81,3 @@ namespace rb
     bool operator>(Object left, Object right);
     
 }
-
-#include "Class.hpp"
-#include "Module.hpp"
-
-#endif // RUBY_OBJECT_HPP
