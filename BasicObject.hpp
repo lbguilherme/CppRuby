@@ -8,11 +8,9 @@ namespace rb
     class BasicObject;
     class BasicObject
     {
-    protected:
+    public:
         
         VALUE value;
-        
-    public:
         
         BasicObject() {};
         BasicObject(VALUE v) : value(v) {};
@@ -21,6 +19,7 @@ namespace rb
         BasicObject call(Identifier method, const Args&... args);
         template<typename... Args>
         BasicObject public_call(Identifier method, const Args&... args);
+        
         
         explicit operator bool() const { return RTEST(value); }
         operator VALUE() const { return value; }

@@ -3,33 +3,45 @@
 #include <iostream>
 using namespace rb;
 
-Object A_get_number(Object self)
-{
-    if (self.ivar("@number") == Nil)
-        return ruby_cast<Object>(0);
+struct A : public Object // Must inherit from Object (or, at least, from BasicObject)
+{                        // This doesn't means ruby-side inheritance. Define the second
+    int number;          // argument from Class::Define to do it.
     
-    return self.ivar("@number");
-}
+    A() : number(0) {} // Called from #allocate
+    
+    Object initialize(Object num)
+    {
+        set_number(num);
+        return self();
+    }
+    
+    Object get_number()
+    {
+        return ruby_cast<Object>(number);
+    }
+    
+    Object set_number(Object num)
+    {
+        number = ruby_cast<int>(num);
+        return num;
+    }
 
-Object A_set_number(Object self, Object number)
-{
-    self.ivar("@number", number);
-    return number;
-}
-
-Object A_show_all(int argc, Object argv[], Object self)
-{
-    for (int i = 0; i < argc; ++i)
-        std::cout << argv[i] << std::endl; // calls #to_s
-    return self;
-}
+    Object show_all(int argc, Object argv[])
+    {
+        for (int i = 0; i < argc; ++i)
+            std::cout << argv[i] << std::endl;
+        return self();
+    }
+    
+};
 
 extern "C"
 void Init_test()
 {
-    Class::Define("A")
-        .def<A_get_number>("number")
-        .def<A_set_number>("number=")
-        .def<A_show_all>("show_all")
+    DataClass<A>::Define("A")
+        .def<&A::initialize>("initialize")
+        .def<&A::get_number>("number")
+        .def<&A::set_number>("number=")
+        .def<&A::show_all>("show_all")
     ;
 }

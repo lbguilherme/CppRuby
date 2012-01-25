@@ -16,6 +16,8 @@ namespace rb
         Object(VALUE v) : BasicObject(v) {}
         Object(BasicObject o) : BasicObject(o) {}
         
+        Object self() {return value;}
+        
         Object ivar_defined(Identifier var);
         Object ivar(Identifier var);
         Object ivar(Identifier var, Object obj);
