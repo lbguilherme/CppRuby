@@ -5,14 +5,14 @@ namespace rb
 {
     
     template<typename... Args>
-    BasicObject BasicObject::call(Identifier method, const Args&... args)
+    Object BasicObject::call(Identifier method, const Args&... args)
     {
         BasicObject oargs[] = {args...};
         return rb_funcall2(value, method.id, sizeof...(args), (VALUE*)oargs);
     }
     
     template<typename... Args>
-    BasicObject BasicObject::public_call(Identifier method, const Args&... args)
+    Object BasicObject::public_call(Identifier method, const Args&... args)
     {
         BasicObject oargs[] = {args...};
         return rb_funcall3(value, method.id, sizeof...(args), (VALUE*)oargs);

@@ -7,9 +7,13 @@
 namespace rb
 {
     
+    Module mKernel     = rb_mKernel;
+    
     Class cBasicObject = rb_cBasicObject;
     Class cObject      = rb_cObject;
     Class cClass       = rb_cClass;
+    
+    Class eException   = rb_eException;
     
     Object Nil   = Qnil;
     Object True  = Qtrue;
@@ -17,15 +21,15 @@ namespace rb
     Object Undef = Qundef;
     
     template<typename... Args>
-    static Object call(Identifier method, const Args&... args);
+    Object call(Identifier method, const Args&... args);
     
     template<typename... Args>
-    static Object p(const Args&... args);
+    Object p(const Args&... args);
     
     template<typename... Args>
-    static Object print(const Args&... args);
+    Object print(const Args&... args);
     
     template<typename... Args>
-    static Object puts(const Args&... args);
+    Object puts(const Args&... args);
     
 }

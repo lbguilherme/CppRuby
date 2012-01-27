@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Module.hpp"
+#include "callback.hpp"
 
 namespace rb
 {

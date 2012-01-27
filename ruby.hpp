@@ -4,8 +4,10 @@
 #include <ostream>
 #include <functional>
 #include <memory>
+#include <exception>
 #include <ruby.h>
 
+#include "Exception.hpp"
 #include "BasicObject.hpp"
 #include "Class.hpp"
 #include "DataClass.hpp"

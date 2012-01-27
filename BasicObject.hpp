@@ -5,6 +5,7 @@
 namespace rb
 {
     
+    class Object;
     class BasicObject;
     class BasicObject
     {
@@ -16,9 +17,9 @@ namespace rb
         BasicObject(VALUE v) : value(v) {};
         
         template<typename... Args>
-        BasicObject call(Identifier method, const Args&... args);
+        Object call(Identifier method, const Args&... args);
         template<typename... Args>
-        BasicObject public_call(Identifier method, const Args&... args);
+        Object public_call(Identifier method, const Args&... args);
         
         
         explicit operator bool() const { return RTEST(value); }
