@@ -10,7 +10,8 @@ namespace rb
 }
 
 // Converts C++ exceptions to Ruby exceptions. Any object created outside the
-// RBPROTECT block may not have its destructor called.
+// RBPROTECT block may not have its destructor called. All user code defined
+// as ruby method is inside RBPROTECT. (See callback.hpp)
 
 #define RBPROTECT(block) \
 try block \
