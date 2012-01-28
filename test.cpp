@@ -51,10 +51,13 @@ Object A::raise_error()
 void A::Init()
 {
     cA = DataClass<A>::Define("A")
+        .Public()
         .def<&A::initialize>("initialize")
         .def<&A::get_number>("number")
         .def<&A::set_number>("number=")
+        .Protected()
         .def<&A::show_all>("show_all")
+        .Private()
         .def<&A::raise_error>("raise_error")
     ;
 }

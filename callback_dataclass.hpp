@@ -5,67 +5,8 @@ namespace rb
     
     namespace priv
     {
-        // TODO: Allow method overloading
-        // TODO: Write to 15 args... (now its limited to four...)
         
-        template<Object(*Func)(int, Object[], Object)>
-        VALUE callback(int argc, VALUE argv[], VALUE self)
-        {
-            Object oargs[argc]; // Valid only on GNU
-            for (int i = 0; i < argc; ++i)
-                oargs[i] = argv[i];
-            RBPROTECT
-            ({
-                return Func(argc, oargs, self);
-            })
-        }
-        
-        template<Object(*Func)(Object)>
-        VALUE callback(VALUE self)
-        {
-            RBPROTECT
-            ({
-                return Func(self);
-            })
-        }
-        
-        template<Object(*Func)(Object, Object)>
-        VALUE callback(VALUE self, VALUE arg1)
-        {
-            RBPROTECT
-            ({
-                return Func(self, arg1);
-            })
-        }
-        
-        template<Object(*Func)(Object, Object, Object)>
-        VALUE callback(VALUE self, VALUE arg1, VALUE arg2)
-        {
-            RBPROTECT
-            ({
-                return Func(self, arg1, arg2);
-            })
-        }
-        
-        template<Object(*Func)(Object, Object, Object, Object)>
-        VALUE callback(VALUE self, VALUE arg1, VALUE arg2, VALUE arg3)
-        {
-            RBPROTECT
-            ({
-                return Func(self, arg1, arg2, arg3);
-            })
-        }
-        
-        template<Object(*Func)(Object, Object, Object, Object, Object)>
-        VALUE callback(VALUE self, VALUE arg1, VALUE arg2, VALUE arg3, VALUE arg4)
-        {
-            RBPROTECT
-            ({
-                return Func(self, arg1, arg2, arg3, arg4);
-            })
-        }
-        
-        template<typename T, typename Allocator = std::allocator<T>>
+                template<typename T, typename Allocator = std::allocator<T>>
         void callback_free(void* ptr)
         {
             RBPROTECT
@@ -85,20 +26,18 @@ namespace rb
                 obj = Allocator().allocate(1);
                 new(obj) T();
             })
-            return rb_data_object_alloc(klass, obj, NULL, callback_free<T, Allocator>);
+            VALUE v = rb_data_object_alloc(klass, obj, NULL, callback_free<T, Allocator>);
+            obj->value = v;
+            return v;
         }
         
         template<typename T, Object(T::*Func)(int, Object[])>
         VALUE callback(int argc, VALUE argv[], VALUE self)
         {
             T* obj = reinterpret_cast<T*>(DATA_PTR(self));
-            obj->value = self;
-            Object oargs[argc]; // Valid only on GNU
-            for (int i = 0; i < argc; ++i)
-                oargs[i] = argv[i];
             RBPROTECT
             ({
-                return (obj->*Func)(argc, oargs);
+                return (obj->*Func)(argc, reinterpret_cast<Object*>(argv));
             })
         }
         
@@ -106,7 +45,6 @@ namespace rb
         VALUE callback(VALUE self)
         {
             T* obj = reinterpret_cast<T*>(DATA_PTR(self));
-            obj->value = self;
             RBPROTECT
             ({
                 return (obj->*Func)();
@@ -117,7 +55,6 @@ namespace rb
         VALUE callback(VALUE self, VALUE arg1)
         {
             T* obj = reinterpret_cast<T*>(DATA_PTR(self));
-            obj->value = self;
             RBPROTECT
             ({
                 return (obj->*Func)(arg1);
@@ -139,7 +76,6 @@ namespace rb
         VALUE callback(VALUE self, VALUE arg1, VALUE arg2, VALUE arg3)
         {
             T* obj = reinterpret_cast<T*>(DATA_PTR(self));
-            obj->value = self;
             RBPROTECT
             ({
                 return (obj->*Func)(arg1, arg2, arg3);
@@ -150,7 +86,6 @@ namespace rb
         VALUE callback(VALUE self, VALUE arg1, VALUE arg2, VALUE arg3, VALUE arg4)
         {
             T* obj = reinterpret_cast<T*>(DATA_PTR(self));
-            obj->value = self;
             RBPROTECT
             ({
                 return (obj->*Func)(arg1, arg2, arg3, arg4);
@@ -158,4 +93,5 @@ namespace rb
         }
         
     }
+    
 }

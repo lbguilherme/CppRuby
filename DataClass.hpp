@@ -1,15 +1,39 @@
 #pragma once
 
-#include "Module.hpp"
-#include "callback.hpp"
+#include "Class.hpp"
+#include "callback_dataclass.hpp"
 
 namespace rb
 {
-    template<typename T, typename Allocator = std::allocator<T>>
+    
+    template<typename T>
+    class RbAllocator : public std::allocator<T>
+    {
+    public:
+        
+        T* allocate(std::size_t amount)
+        {
+            void* ptr = xmalloc(amount * sizeof(T));
+            if (ptr == NULL) throw std::bad_alloc();
+            return reinterpret_cast<T*>(ptr);
+        }
+
+        void deallocate(T* obj, std::size_t amount)
+        {
+            (void)amount;
+            xfree(reinterpret_cast<void*>(obj));
+        }
+        
+    };
+
+    template<typename T, typename Allocator = RbAllocator<T>>
     class DataClass;
     template<typename T, typename Allocator>
     class DataClass : public Module
     {
+        
+        enum {PUBLIC, PROTECTED, PRIVATE} m_next_method;
+        
     public:
         
         DataClass() {}
@@ -20,58 +44,39 @@ namespace rb
         static DataClass<T, Allocator> Define(Module under, const char* name, Class super = rb_cObject);
         
         template<typename... Args>
-        Object New(const Args&... args)
-        {
-            return rb_class_new_instance(sizeof...(args), (VALUE[]){args...}, value);
-        }
+        T New(const Args&... args);
+        
+        DataClass<T, Allocator>& Public()    {m_next_method = PUBLIC;    return *this;}
+        DataClass<T, Allocator>& Protected() {m_next_method = PROTECTED; return *this;}
+        DataClass<T, Allocator>& Private()   {m_next_method = PRIVATE;   return *this;}
+        
+        template<typename... Args>
+        DataClass<T, Allocator>& Public(const char* name);
+        template<typename... Args>
+        DataClass<T, Allocator>& Public(const char* name, const char* name2, const Args&... args);
+        
+        template<typename... Args>
+        DataClass<T, Allocator>& Protected(const char* name);
+        template<typename... Args>
+        DataClass<T, Allocator>& Protected(const char* name, const char* name2, const Args&... args);
+        
+        template<typename... Args>
+        DataClass<T, Allocator>& Private(const char* name);
+        template<typename... Args>
+        DataClass<T, Allocator>& Private(const char* name, const char* name2, const Args&... args);
         
         template<Object(T::*Func)(int, Object[])>
-        DataClass<T, Allocator>& def(const char* name)
-        {
-            auto f = priv::callback<T, Func>;
-            rb_define_method(value, name, (VALUE(*)(...))f, -1);
-            return *this;
-        }
-        
+        DataClass<T, Allocator>& def(const char* name);
         template<Object(T::*Func)()>
-        DataClass<T, Allocator>& def(const char* name)
-        {
-            auto f = priv::callback<T, Func>;
-            rb_define_method(value, name, (VALUE(*)(...))f, 0);
-            return *this;
-        }
-        
+        DataClass<T, Allocator>& def(const char* name);
         template<Object(T::*Func)(Object)>
-        DataClass<T, Allocator>& def(const char* name)
-        {
-            auto f = priv::callback<T, Func>;
-            rb_define_method(value, name, (VALUE(*)(...))f, 1);
-            return *this;
-        }
-        
+        DataClass<T, Allocator>& def(const char* name);
         template<Object(T::*Func)(Object, Object)>
-        DataClass<T, Allocator>& def(const char* name)
-        {
-            auto f = priv::callback<T, Func>;
-            rb_define_method(value, name, (VALUE(*)(...))f, 2);
-            return *this;
-        }
-        
+        DataClass<T, Allocator>& def(const char* name);
         template<Object(T::*Func)(Object, Object, Object)>
-        DataClass<T, Allocator>& def(const char* name)
-        {
-            auto f = priv::callback<T, Func>;
-            rb_define_method(value, name, (VALUE(*)(...))f, 3);
-            return *this;
-        }
-        
+        DataClass<T, Allocator>& def(const char* name);
         template<Object(T::*Func)(Object, Object, Object, Object)>
-        DataClass<T, Allocator>& def(const char* name)
-        {
-            auto f = priv::callback<T, Func>;
-            rb_define_method(value, name, (VALUE(*)(...))f, 4);
-            return *this;
-        }
+        DataClass<T, Allocator>& def(const char* name);
         
     };
     
