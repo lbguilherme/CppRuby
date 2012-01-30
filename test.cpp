@@ -3,6 +3,21 @@
 #include <iostream>
 using namespace rb;
 
+// TODO:
+// - Module method definition
+// - Exception control on all C API calls
+// - Wrap more basic Ruby classes
+// - Handle Ruby variables / constants (maybe using reference?)
+// - Remember to put more thing in this list
+
+struct CtorTest
+{
+    // Both constructor and destructor must be called after raising a Ruby
+    // exception in a C++ function. (try A.new(1).number = "aa")
+    CtorTest() {std::cout << "called CtorTest()" << std::endl;}
+    ~CtorTest() {std::cout << "called ~CtorTest()" << std::endl;}
+};
+
 struct A : public Object
 {
     int number;
@@ -32,6 +47,7 @@ Object A::get_number()
 
 Object A::set_number(Object num)
 {
+    CtorTest t;
     number = ruby_cast<int>(num);
     return num;
 }

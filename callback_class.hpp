@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Exception_protect.hpp"
+
 namespace rb
 {
     

@@ -18,6 +18,9 @@ namespace rb
         
         Object self() {return value;}
         
+        template<typename T>
+        T& data() {return *reinterpret_cast<T*>(DATA_PTR(value));}
+        
         Object ivar_defined(Identifier var);
         Object ivar(Identifier var);
         Object ivar(Identifier var, Object obj);
