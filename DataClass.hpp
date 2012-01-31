@@ -44,7 +44,7 @@ namespace rb
         static DataClass<T, Allocator> Define(Module under, const char* name, Class super = rb_cObject);
         
         template<typename... Args>
-        T& New(const Args&... args);
+        T& New(Args... args);
         
         DataClass<T, Allocator>& Public()    {m_next_method = PUBLIC;    return *this;}
         DataClass<T, Allocator>& Protected() {m_next_method = PROTECTED; return *this;}

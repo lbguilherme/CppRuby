@@ -16,7 +16,7 @@ namespace rb
     }
     
     template<typename... Args>
-    Object Class::New(const Args&... args)
+    Object Class::New(Args... args)
     {
         return rb_class_new_instance(sizeof...(args), (VALUE[]){args...}, value);
     }

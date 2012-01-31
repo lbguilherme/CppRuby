@@ -21,7 +21,7 @@ namespace rb
         static Class Define(Module under, const char* name, Class super = rb_cObject);
         
         template<typename... Args>
-        Object New(const Args&... args);
+        Object New(Args... args);
         
         Class& Public()    {m_next_method = PUBLIC;    return *this;}
         Class& Protected() {m_next_method = PROTECTED; return *this;}

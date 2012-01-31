@@ -5,17 +5,19 @@ namespace rb
 {
     
     template<typename... Args>
-    Object BasicObject::call(Identifier method, const Args&... args)
+    Object BasicObject::call(Identifier method, Args... args)
     {
         BasicObject oargs[] = {args...};
-        return rb_funcall2(value, method.id, sizeof...(args), (VALUE*)oargs);
+        int argc = sizeof...(args);
+        return rb_funcall2(value, method.id, argc, (VALUE*)oargs);
     }
     
     template<typename... Args>
-    Object BasicObject::public_call(Identifier method, const Args&... args)
+    Object BasicObject::public_call(Identifier method, Args... args)
     {
         BasicObject oargs[] = {args...};
-        return rb_funcall3(value, method.id, sizeof...(args), (VALUE*)oargs);
+        int argc = sizeof...(args);
+        return rb_funcall3(value, method.id, argc, (VALUE*)oargs);
     }
     
     bool operator==(BasicObject left, BasicObject right)

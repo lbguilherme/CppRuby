@@ -24,7 +24,7 @@ namespace rb
     
     template<typename T, typename Allocator>
     template<typename... Args>
-    T& DataClass<T, Allocator>::New(const Args&... args)
+    T& DataClass<T, Allocator>::New(Args... args)
     {
         Object obj = rb_class_new_instance(sizeof...(args), (VALUE[]){args...}, value);
         return obj.data<T>();
