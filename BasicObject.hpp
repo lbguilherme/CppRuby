@@ -41,7 +41,7 @@ namespace rb
         
     };
     
-    bool operator==(BasicObject left, BasicObject right);
-    bool operator!=(BasicObject left, BasicObject right);
+    inline Object operator==(BasicObject left, BasicObject right);
+    inline Object operator!=(BasicObject left, BasicObject right);
     
 }

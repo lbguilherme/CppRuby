@@ -246,21 +246,20 @@ namespace rb
     
     std::ostream& operator<<(std::ostream& stream, Object obj)
     {
-        stream << ruby_cast<char*>(obj.to_s());
-        return stream;
+        return stream << ruby_cast<char*>(obj.to_s());
     }
     
-    bool operator!(Object left)
+    Object operator!(Object left)
     {
         return left.call("!");
     }
     
-    bool operator<(Object left, Object right)
+    Object operator<(Object left, Object right)
     {
         return left.call("<", right);
     }
     
-    bool operator>(Object left, Object right)
+    Object operator>(Object left, Object right)
     {
         return left.call(">", right);
     }

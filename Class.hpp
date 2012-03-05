@@ -8,52 +8,49 @@ namespace rb
     class Class;
     class Class : public Module
     {
-        
-        enum {PUBLIC, PROTECTED, PRIVATE} m_next_method;
-        
     public:
         
-        Class() : m_next_method(PUBLIC) {}
-        Class(VALUE v) : Module(v), m_next_method(PUBLIC) {}
-        Class(BasicObject o) : Module(o), m_next_method(PUBLIC) {}
+        Class() {}
+        Class(VALUE v) : Module(v) {}
+        Class(BasicObject o) : Module(o) {}
         
-        static Class Define(const char* name, Class super = rb_cObject);
-        static Class Define(Module under, const char* name, Class super = rb_cObject);
-        
-        template<typename... Args>
-        Object New(Args... args);
-        
-        Class& Public()    {m_next_method = PUBLIC;    return *this;}
-        Class& Protected() {m_next_method = PROTECTED; return *this;}
-        Class& Private()   {m_next_method = PRIVATE;   return *this;}
+        inline static Class Define(const char* name, Class super = rb_cObject);
+        inline static Class Define(Module under, const char* name, Class super = rb_cObject);
         
         template<typename... Args>
-        Class& Public(const char* name);
-        template<typename... Args>
-        Class& Public(const char* name, const char* name2, const Args&... args);
+        inline Object New(Args... args);
+        
+        Class& Public()    {m_method_visibility = PUBLIC;    return *this;}
+        Class& Protected() {m_method_visibility = PROTECTED; return *this;}
+        Class& Private()   {m_method_visibility = PRIVATE;   return *this;}
         
         template<typename... Args>
-        Class& Protected(const char* name);
+        inline Class& Public(const char* name);
         template<typename... Args>
-        Class& Protected(const char* name, const char* name2, const Args&... args);
+        inline Class& Public(const char* name, const char* name2, const Args&... args);
         
         template<typename... Args>
-        Class& Private(const char* name);
+        inline Class& Protected(const char* name);
         template<typename... Args>
-        Class& Private(const char* name, const char* name2, const Args&... args);
+        inline Class& Protected(const char* name, const char* name2, const Args&... args);
+        
+        template<typename... Args>
+        inline Class& Private(const char* name);
+        template<typename... Args>
+        inline Class& Private(const char* name, const char* name2, const Args&... args);
         
         template<Object(*Func)(int, Object[], Object)>
-        Class& def(const char* name);
+        inline Class& def(const char* name);
         template<Object(*Func)(Object)>
-        Class& def(const char* name);
+        inline Class& def(const char* name);
         template<Object(*Func)(Object, Object)>
-        Class& def(const char* name);
+        inline Class& def(const char* name);
         template<Object(*Func)(Object, Object, Object)>
-        Class& def(const char* name);
+        inline Class& def(const char* name);
         template<Object(*Func)(Object, Object, Object, Object)>
-        Class& def(const char* name);
+        inline Class& def(const char* name);
         template<Object(*Func)(Object, Object, Object, Object, Object)>
-        Class& def(const char* name);
+        inline Class& def(const char* name);
         
     };
     

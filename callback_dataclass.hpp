@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Exception_protect.hpp"
-
+#include <iostream>
 namespace rb
 {
     
@@ -9,7 +9,7 @@ namespace rb
     {
         
         template<typename T, typename Allocator = std::allocator<T>>
-        void callback_free(void* ptr)
+        inline void callback_free(void* ptr)
         {
             RBPROTECT
             ({
@@ -20,7 +20,7 @@ namespace rb
         }
         
         template<typename T, typename Allocator = std::allocator<T>>
-        VALUE callback_alloc(VALUE klass)
+        inline VALUE callback_alloc(VALUE klass)
         {
             T* obj;
             RBPROTECT
@@ -36,7 +36,7 @@ namespace rb
         }
         
         template<typename T, Object(T::*Func)(int, Object[])>
-        VALUE callback(int argc, VALUE argv[], VALUE self)
+        inline VALUE callback(int argc, VALUE argv[], VALUE self)
         {
             T& obj = Object(self).data<T>();
             RBPROTECT
@@ -47,18 +47,19 @@ namespace rb
         }
         
         template<typename T, Object(T::*Func)()>
-        VALUE callback(VALUE self)
+        inline VALUE callback(VALUE self)
         {
             T& obj = Object(self).data<T>();
             RBPROTECT
             ({
+                std::cout << Func;
                 return (obj.*Func)();
             })
             return Nil;
         }
         
         template<typename T, Object(T::*Func)(Object)>
-        VALUE callback(VALUE self, VALUE arg1)
+        inline VALUE callback(VALUE self, VALUE arg1)
         {
             T& obj = Object(self).data<T>();
             RBPROTECT
@@ -69,7 +70,7 @@ namespace rb
         }
         
         template<typename T, Object(T::*Func)(Object, Object)>
-        VALUE callback(VALUE self, VALUE arg1, VALUE arg2)
+        inline VALUE callback(VALUE self, VALUE arg1, VALUE arg2)
         {
             T& obj = Object(self).data<T>();
             obj->value = self;
@@ -81,7 +82,7 @@ namespace rb
         }
         
         template<typename T, Object(T::*Func)(Object, Object, Object)>
-        VALUE callback(VALUE self, VALUE arg1, VALUE arg2, VALUE arg3)
+        inline VALUE callback(VALUE self, VALUE arg1, VALUE arg2, VALUE arg3)
         {
             T& obj = Object(self).data<T>();
             RBPROTECT
@@ -92,7 +93,7 @@ namespace rb
         }
         
         template<typename T, Object(T::*Func)(Object, Object, Object, Object)>
-        VALUE callback(VALUE self, VALUE arg1, VALUE arg2, VALUE arg3, VALUE arg4)
+        inline VALUE callback(VALUE self, VALUE arg1, VALUE arg2, VALUE arg3, VALUE arg4)
         {
             T& obj = Object(self).data<T>();
             RBPROTECT

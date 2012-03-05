@@ -8,105 +8,108 @@ namespace rb
 {
     
     // Modules
-    Module mKernel       = rb_mKernel;
-    Module mComparable   = rb_mComparable;
-    Module mEnumerable   = rb_mEnumerable;
-    Module mErrno        = rb_mErrno;
-    Module mFileTest     = rb_mFileTest;
-    Module mGC           = rb_mGC;
-    Module mMath         = rb_mMath;
-    Module mProcess      = rb_mProcess;
-    Module mWaitReadable = rb_mWaitReadable;
-    Module mWaitWritable = rb_mWaitWritable;
+    extern Module mKernel;
+    extern Module mComparable;
+    extern Module mEnumerable;
+    extern Module mErrno;
+    extern Module mFileTest;
+    extern Module mGC;
+    extern Module mMath;
+    extern Module mProcess;
+    extern Module mWaitReadable;
+    extern Module mWaitWritable;
     
     // Classes
-    Class cBasicObject   = rb_cBasicObject;
-    Class cObject        = rb_cObject;
-    Class cArray         = rb_cArray;
-    Class cBignum        = rb_cBignum;
-    Class cBinding       = rb_cBinding;
-    Class cClass         = rb_cClass;
-    //Class cCont          = rb_cCont; // In github but undefined on my Ruby.
-    Class cDir           = rb_cDir;
-    Class cData          = rb_cData;
-    Class cFalseClass    = rb_cFalseClass;
-    Class cEncoding      = rb_cEncoding;
-    Class cEnumerator    = rb_cEnumerator;
-    Class cFile          = rb_cFile;
-    Class cFixnum        = rb_cFixnum;
-    Class cFloat         = rb_cFloat;
-    Class cHash          = rb_cHash;
-    Class cInteger       = rb_cInteger;
-    Class cIO            = rb_cIO;
-    Class cMatch         = rb_cMatch;
-    Class cMethod        = rb_cMethod;
-    Class cModule        = rb_cModule;
-    Class cNameErrorMesg = rb_cNameErrorMesg;
-    Class cNilClass      = rb_cNilClass;
-    Class cNumeric       = rb_cNumeric;
-    Class cProc          = rb_cProc;
-    Class cRandom        = rb_cRandom;
-    Class cRange         = rb_cRange;
-    Class cRational      = rb_cRational;
-    Class cComplex       = rb_cComplex;
-    Class cRegexp        = rb_cRegexp;
-    Class cStat          = rb_cStat;
-    Class cString        = rb_cString;
-    Class cStruct        = rb_cStruct;
-    Class cSymbol        = rb_cSymbol;
-    Class cThread        = rb_cThread;
-    Class cTime          = rb_cTime;
-    Class cTrueClass     = rb_cTrueClass;
-    Class cUnboundMethod = rb_cUnboundMethod;
+    extern Class cBasicObject;
+    extern Class cObject;
+    extern Class cArray;
+    extern Class cBignum;
+    extern Class cBinding;
+    extern Class cClass;
+    //extern Class cCont;
+    extern Class cDir;
+    extern Class cData;
+    extern Class cFalseClass;
+    extern Class cEncoding;
+    extern Class cEnumerator;
+    extern Class cFile;
+    extern Class cFixnum;
+    extern Class cFloat;
+    extern Class cHash;
+    extern Class cInteger;
+    extern Class cIO;
+    extern Class cMatch;
+    extern Class cMethod;
+    extern Class cModule;
+    extern Class cNameErrorMesg;
+    extern Class cNilClass;
+    extern Class cNumeric;
+    extern Class cProc;
+    extern Class cRandom;
+    extern Class cRange;
+    extern Class cRational;
+    extern Class cComplex;
+    extern Class cRegexp;
+    extern Class cStat;
+    extern Class cString;
+    extern Class cStruct;
+    extern Class cSymbol;
+    extern Class cThread;
+    extern Class cTime;
+    extern Class cTrueClass;
+    extern Class cUnboundMethod;
     
     // Exceptions
-    Class eException        = rb_eException;
-    Class eStandardError    = rb_eStandardError;
-    Class eSystemExit       = rb_eSystemExit;
-    Class eInterrupt        = rb_eInterrupt;
-    Class eSignal           = rb_eSignal;
-    Class eFatal            = rb_eFatal;
-    Class eArgError         = rb_eArgError;
-    Class eEOFError         = rb_eEOFError;
-    Class eIndexError       = rb_eIndexError;
-    Class eStopIteration    = rb_eStopIteration;
-    Class eKeyError         = rb_eKeyError;
-    Class eRangeError       = rb_eRangeError;
-    Class eIOError          = rb_eIOError;
-    Class eRuntimeError     = rb_eRuntimeError;
-    Class eSecurityError    = rb_eSecurityError;
-    Class eSystemCallError  = rb_eSystemCallError;
-    Class eThreadError      = rb_eThreadError;
-    Class eTypeError        = rb_eTypeError;
-    Class eZeroDivError     = rb_eZeroDivError;
-    Class eNotImpError      = rb_eNotImpError;
-    Class eNoMemError       = rb_eNoMemError;
-    Class eNoMethodError    = rb_eNoMethodError;
-    Class eFloatDomainError = rb_eFloatDomainError;
-    Class eLocalJumpError   = rb_eLocalJumpError;
-    Class eSysStackError    = rb_eSysStackError;
-    Class eRegexpError      = rb_eRegexpError;
-    Class eEncodingError    = rb_eEncodingError;
-    Class eEncCompatError   = rb_eEncCompatError;
-    Class eScriptError      = rb_eScriptError;
-    Class eNameError        = rb_eNameError;
-    Class eSyntaxError      = rb_eSyntaxError;
-    Class eLoadError        = rb_eLoadError;
-    Class eMathDomainError  = rb_eMathDomainError;
+    extern Class eException;
+    extern Class eStandardError;
+    extern Class eSystemExit;
+    extern Class eInterrupt;
+    extern Class eSignal;
+    extern Class eFatal;
+    extern Class eArgError;
+    extern Class eEOFError;
+    extern Class eIndexError;
+    extern Class eStopIteration;
+    extern Class eKeyError;
+    extern Class eRangeError;
+    extern Class eIOError;
+    extern Class eRuntimeError;
+    extern Class eSecurityError;
+    extern Class eSystemCallError;
+    extern Class eThreadError;
+    extern Class eTypeError;
+    extern Class eZeroDivError;
+    extern Class eNotImpError;
+    extern Class eNoMemError;
+    extern Class eNoMethodError;
+    extern Class eFloatDomainError;
+    extern Class eLocalJumpError;
+    extern Class eSysStackError;
+    extern Class eRegexpError;
+    extern Class eEncodingError;
+    extern Class eEncCompatError;
+    extern Class eScriptError;
+    extern Class eNameError;
+    extern Class eSyntaxError;
+    extern Class eLoadError;
+    extern Class eMathDomainError;
     
     // Objects
-    Object Nil   = Qnil;
-    Object True  = Qtrue;
-    Object False = Qfalse;
-    Object Undef = Qundef;
+    extern Object Nil;
+    extern Object True;
+    extern Object False;
+    extern Object Undef;
     
     template<typename... Args>
-    Object p(const Args&... args);
+    inline Object p(Args... args);
     
     template<typename... Args>
-    Object print(const Args&... args);
+    inline Object print(Args... args);
     
     template<typename... Args>
-    Object puts(const Args&... args);
+    inline Object puts(Args... args);
+    
+    template<typename... Args>
+    inline Object raise(Args... args);
     
 }

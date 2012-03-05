@@ -8,7 +8,7 @@ namespace rb
     namespace priv
     {
         
-        VALUE rescue_rescue_block(VALUE data, VALUE ex)
+        inline VALUE rescue_rescue_block(VALUE data, VALUE ex)
         {
             VALUE* out = (VALUE*)data;
             *out = ex;
@@ -16,7 +16,7 @@ namespace rb
         }
         
         template<typename RetT, RetT(*Func)()>
-        VALUE rescue_begin_body(VALUE data)
+        inline VALUE rescue_begin_body(VALUE data)
         {
             void** ptr = (void**)data;
             RetT* out = reinterpret_cast<RetT*>(ptr[0]);
@@ -25,7 +25,7 @@ namespace rb
         }
         
         template<typename RetT, typename Arg1T, RetT(*Func)(Arg1T)>
-        VALUE rescue_begin_body(VALUE data)
+        inline VALUE rescue_begin_body(VALUE data)
         {
             void** ptr = (void**)data;
             RetT* out = reinterpret_cast<RetT*>(ptr[0]);
@@ -35,7 +35,7 @@ namespace rb
         }
         
         template<typename RetT, typename Arg1T, typename Arg2T, RetT(*Func)(Arg1T, Arg2T)>
-        VALUE rescue_begin_body(VALUE data)
+        inline VALUE rescue_begin_body(VALUE data)
         {
             void** ptr = (void**)data;
             RetT* out = reinterpret_cast<RetT*>(ptr[0]);
@@ -46,7 +46,7 @@ namespace rb
         }
         
         template<typename RetT, typename Arg1T, typename Arg2T, typename Arg3T, RetT(*Func)(Arg1T, Arg2T, Arg3T)>
-        VALUE rescue_begin_body(VALUE data)
+        inline VALUE rescue_begin_body(VALUE data)
         {
             void** ptr = (void**)data;
             RetT* out = reinterpret_cast<RetT*>(ptr[0]);
@@ -58,7 +58,7 @@ namespace rb
         }
         
         template<typename RetT, typename Arg1T, typename Arg2T, typename Arg3T, typename Arg4T, RetT(*Func)(Arg1T, Arg2T, Arg3T, Arg4T)>
-        VALUE rescue_begin_body(VALUE data)
+        inline VALUE rescue_begin_body(VALUE data)
         {
             void** ptr = (void**)data;
             RetT* out = reinterpret_cast<RetT*>(ptr[0]);
@@ -71,7 +71,7 @@ namespace rb
         }
         
         template<typename RetT, RetT(*Func)()>
-        void rescue(RetT* out)
+        inline void rescue(RetT* out)
         {
             auto f1 = rescue_begin_body<RetT, Func>;
             auto f2 = rescue_rescue_block;
@@ -84,7 +84,7 @@ namespace rb
         }
         
         template<typename RetT, typename Arg1T, RetT(*Func)(Arg1T)>
-        void rescue(RetT* out, Arg1T* arg1)
+        inline void rescue(RetT* out, Arg1T* arg1)
         {
             auto f1 = rescue_begin_body<RetT, Arg1T, Func>;
             auto f2 = rescue_rescue_block;
@@ -98,7 +98,7 @@ namespace rb
         }
         
         template<typename RetT, typename Arg1T, typename Arg2T, RetT(*Func)(Arg1T, Arg2T)>
-        void rescue(RetT* out, Arg1T* arg1, Arg2T* arg2)
+        inline void rescue(RetT* out, Arg1T* arg1, Arg2T* arg2)
         {
             auto f1 = rescue_begin_body<RetT, Arg1T, Arg2T, Func>;
             auto f2 = rescue_rescue_block;
@@ -113,7 +113,7 @@ namespace rb
         }
         
         template<typename RetT, typename Arg1T, typename Arg2T, typename Arg3T, RetT(*Func)(Arg1T, Arg2T, Arg3T)>
-        void rescue(RetT* out, Arg1T* arg1, Arg2T* arg2, Arg3T* arg3)
+        inline void rescue(RetT* out, Arg1T* arg1, Arg2T* arg2, Arg3T* arg3)
         {
             auto f1 = rescue_begin_body<RetT, Arg1T, Arg2T, Arg3T, Func>;
             auto f2 = rescue_rescue_block;
@@ -129,7 +129,7 @@ namespace rb
         }
         
         template<typename RetT, typename Arg1T, typename Arg2T, typename Arg3T, typename Arg4T, RetT(*Func)(Arg1T, Arg2T, Arg3T, Arg4T)>
-        void rescue(RetT* out, Arg1T* arg1, Arg2T* arg2, Arg3T* arg3, Arg4T* arg4)
+        inline void rescue(RetT* out, Arg1T* arg1, Arg2T* arg2, Arg3T* arg3, Arg4T* arg4)
         {
             auto f1 = rescue_begin_body<RetT, Arg1T, Arg2T, Arg3T, Arg4T, Func>;
             auto f2 = rescue_rescue_block;

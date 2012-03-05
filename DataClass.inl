@@ -79,11 +79,12 @@ namespace rb
     }
     
 #define define_method(func, name, argc) \
-    switch (m_next_method) \
+    switch (m_method_visibility) \
     { \
-        case PUBLIC:    rb_define_method          (value, name, func, argc); break; \
-        case PROTECTED: rb_define_protected_method(value, name, func, argc); break; \
-        case PRIVATE:   rb_define_private_method  (value, name, func, argc); break; \
+        case PUBLIC:          rb_define_method          (value, name, func, argc); break; \
+        case PROTECTED:       rb_define_protected_method(value, name, func, argc); break; \
+        case PRIVATE:         rb_define_private_method  (value, name, func, argc); break; \
+        case MODULE_FUNCTION: rb_define_module_function (value, name, func, argc); break; \
     }
     
     template<typename T, typename Allocator>

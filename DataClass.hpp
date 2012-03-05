@@ -17,7 +17,7 @@ namespace rb
             if (ptr == NULL) throw std::bad_alloc();
             return reinterpret_cast<T*>(ptr);
         }
-
+        
         void deallocate(T* obj, std::size_t amount)
         {
             (void)amount;
@@ -31,9 +31,6 @@ namespace rb
     template<typename T, typename Allocator>
     class DataClass : public Module
     {
-        
-        enum {PUBLIC, PROTECTED, PRIVATE} m_next_method;
-        
     public:
         
         DataClass() {}
@@ -46,9 +43,9 @@ namespace rb
         template<typename... Args>
         T& New(Args... args);
         
-        DataClass<T, Allocator>& Public()    {m_next_method = PUBLIC;    return *this;}
-        DataClass<T, Allocator>& Protected() {m_next_method = PROTECTED; return *this;}
-        DataClass<T, Allocator>& Private()   {m_next_method = PRIVATE;   return *this;}
+        DataClass<T, Allocator>& Public()    {m_method_visibility = PUBLIC;    return *this;}
+        DataClass<T, Allocator>& Protected() {m_method_visibility = PROTECTED; return *this;}
+        DataClass<T, Allocator>& Private()   {m_method_visibility = PRIVATE;   return *this;}
         
         template<typename... Args>
         DataClass<T, Allocator>& Public(const char* name);
