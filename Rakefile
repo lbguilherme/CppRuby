@@ -9,6 +9,8 @@ RUBY_LINK = CONFIG['SOLIBS'] + CONFIG['LIBRUBYARG_SHARED']
 CXX = CONFIG['CXX']
 CXX_FLAGS = "-std=c++0x -O3 -Wall -Wextra -I#{RUBY_INC} -I#{RUBY_INC}/#{CONFIG['arch']} "
 
-task :default do
+task :default => "ruby.o"
+
+file "ruby.o" => (FileList.new("*.cpp") + FileList.new("*.hpp") + FileList.new("*.inl")) do
   sh "#{CXX} #{CXX_FLAGS} -c ruby.cpp -o ruby.o"
 end
